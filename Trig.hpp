@@ -11,36 +11,29 @@
 
 #pragma once
 
-#include <cstdint>
 #include <cmath>
 
-#ifndef M_PI
-#define M_PI 3.1415
-#endif
-
-// template <typename T = uint16_t>
-struct Position
-{
-    uint16_t x, y;
+struct Pos2 {
+  unsigned int x, y;
 };
 
-struct Trig
-{
-    static constexpr auto Pi = M_PI;
+struct Trig {
+  static constexpr auto Pi = M_PI;
 
-    static constexpr float cos(float x) noexcept
-    {
-        constexpr auto tp = 1. / (2. * Pi);
-        x *= tp;
-        x -= .25 + std::floor(x + .25);
-        x *= 16. * (std::abs(x) - .5);
-        return x + .225 * x * (std::abs(x) - 1.);
-    }
+  static constexpr float cos(float x) noexcept
+  {
+    constexpr auto tp = 1. / (2. * Pi);
+    x *= tp;
+    x -= .25 + std::floor(x + .25);
+    x *= 16. * (std::abs(x) - .5);
+    return x + .225 * x * (std::abs(x) - 1.);
+  }
 
-    static constexpr float sin(float x) noexcept { return cos(Pi / 2. - x); }
+  static constexpr float sin(float x) noexcept { return cos(Pi / 2. - x); }
 
-    static constexpr auto polar(float theta, uint16_t rho, Position center = {})
-    {
-        return Position({center.x + rho * cos(theta), center.y + rho * sin(theta)});
-    }
+  static constexpr auto polar(float theta, unsigned int rho, Pos2 center = {})
+  {
+    return Pos2{static_cast<unsigned int>(center.x + rho * cos(theta)),
+                static_cast<unsigned int>(center.y + rho * sin(theta))};
+  }
 };
