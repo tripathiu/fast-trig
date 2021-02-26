@@ -14,7 +14,7 @@
 #include <cmath>
 
 struct Pos2 {
-  unsigned int x, y;
+  float x, y;
 };
 
 struct Trig {
@@ -31,9 +31,8 @@ struct Trig {
 
   static constexpr float sin(float x) noexcept { return cos(Pi / 2. - x); }
 
-  static constexpr auto polar(float theta, unsigned int rho, Pos2 center = {})
+  static constexpr auto polar(float theta, float rho, Pos2 center = {})
   {
-    return Pos2{static_cast<unsigned int>(center.x + rho * cos(theta)),
-                static_cast<unsigned int>(center.y + rho * sin(theta))};
+    return Pos2{center.x + rho * cos(theta), center.y + rho * sin(theta)};
   }
 };
